@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  mongodb:
+    image: mongo:latest
+    restart: always
+    volumes: 
+      - mongo_db:/data/db 
+    ports: 
+      - 27017:27017
+
+  awsserver:
+    build: .
+    ports:
+      - 3000:3000
+    environment:
+      PORT: 3000
+      MONGODB_URI: mongodb://mongodb:27017
+    depends_on:
+      - mongodb
+
+volumes:
+  mongo_db: {}
+
+
